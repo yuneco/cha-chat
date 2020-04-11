@@ -24,13 +24,19 @@ export default defineComponent({
 
 header {
   background-color: $title-color;
+  position: relative;
   .subtitle {
     color: #fff;
     font-size: 11pt;
   }
   .title {
+    position: absolute;
     color: #fff;
     font-size: 42pt;
+    font-weight: bold;
+    width: 100%;
+    left: 0;
+    bottom: -22px;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="card-stage-root">
-    <div class="card-box theme-card-box">
-      <div class="box-title" :style="{
+    <div class="card-box theme-card-box" :style="{filter: `drop-shadow(0 5px 15px ${cardState.themeCard.shadow})`}">
+      <div class="box-title" :class="{flipping: cardState.themeCard.isFlipping}" :style="{
         backgroundColor: cardState.themeCard.color
       }">なんのことをはなす？</div>
       <TalkCard
@@ -11,8 +11,8 @@
         @click="clickThemeCard"
       />
     </div>
-    <div class="card-box style-card-box">
-      <div class="box-title" :style="{
+    <div class="card-box style-card-box" :style="{filter: `drop-shadow(0 5px 15px ${cardState.styleCard.shadow})`}">
+      <div class="box-title" :class="{flipping: cardState.styleCard.isFlipping}" :style="{
         backgroundColor: cardState.styleCard.color
       }">どんなふうにはなす？</div>
       <TalkCard
@@ -34,7 +34,7 @@
 <script lang="ts">
 import { defineComponent, reactive, computed } from '@vue/composition-api'
 import TalkCard from '@/components/TalkCard.vue'
-import { THEME_COLLOR, STYLE_COLOR } from '@/Colors'
+import { THEME_COLLOR, STYLE_COLOR, THEME_SHADOW, STYLE_SHADOW } from '@/Colors'
 import cards from '../assets/cards.json'
 import { randomFrom, wait } from '@/lib/utils'
 import CountDown from '@/components/CountDown.vue'
@@ -50,12 +50,16 @@ export default defineComponent({
       themeCard: {
         text: '100にん//あつまったら//できそうなこと',
         color: THEME_COLLOR,
-        isOpen: false
+        shadow: THEME_SHADOW,
+        isOpen: false,
+        isFlipping: false
       },
       styleCard: {
         text: 'ゆ〜っくり//しゃべってみよう',
         color: STYLE_COLOR,
-        isOpen: false
+        shadow: STYLE_SHADOW,
+        isOpen: false,
+        isFlipping: false
       }
     })
     const timerState = reactive({
@@ -71,27 +75,38 @@ export default defineComponent({
       if (isTheme) {
         cardState.themeCard.text = randomFrom(cards.themes)
         cardState.themeCard.isOpen = true
-        await wait(300)
+        cardState.themeCard.isFlipping = true
+        await wait(250)
+        cardState.themeCard.isFlipping = false
+        await wait(250)
       }
       if (isStyle) {
         cardState.styleCard.text = randomFrom(cards.styles)
         cardState.styleCard.isOpen = true
-        await wait(300)
+        cardState.styleCard.isFlipping = true
+        await wait(250)
+        cardState.styleCard.isFlipping = false
+        await wait(250)
       }
     }
 
     const closeCard = async (isTheme = true, isStyle = true) => {
       if (isTheme) {
         cardState.themeCard.isOpen = false
+        cardState.themeCard.isFlipping = true
       }
       if (isStyle) {
         cardState.styleCard.isOpen = false
+        cardState.styleCard.isFlipping = true
       }
       if (!isAllCardOpen.value) {
         timerState.time = 0
         timerState.isActive = false
       }
-      await wait(500)
+      await wait(250)
+      cardState.themeCard.isFlipping = false
+      cardState.styleCard.isFlipping = false
+      await wait(250)
     }
 
     const setNewCard = async () => {
@@ -143,7 +158,7 @@ export default defineComponent({
 }
 .card-box {
   position: relative;
-  height: calc(50% - 15px);
+  height: calc(50% - 20px);
   padding: 20px 10%;
   transform-style: preserve-3d;
   perspective: 1000px;
@@ -159,6 +174,10 @@ export default defineComponent({
     left: -10px;
     top: 10px;
     z-index: 1;
+    transition: transform 0.2s ease-out;
+    &.flipping {
+      transform: translateY(-20px);
+    }
   }
 }
 .control {
@@ -166,8 +185,10 @@ export default defineComponent({
   width: 100%;
   height: 70px;
   left: 0;
-  top: calc(100% - 20px);
+  top: calc(100% - 15px);
+  z-index: 1;
   text-align: center;
+  filter: drop-shadow(0 0 1px #ffffff00);
   button {
     display: inline-block;
     width: 60px;
@@ -176,7 +197,7 @@ export default defineComponent({
     border-radius: 30px;
     background-color: #fff;
     &+button {
-      margin-left: 5px;
+      margin-left: 8px;
     }
     &.change-button {
       background-image: url(../assets/change.svg);
@@ -199,7 +220,7 @@ export default defineComponent({
   }
   .timer {
     position: absolute;
-    top: 20px;
+    top: 25px;
     right: 10px;
   }
 }

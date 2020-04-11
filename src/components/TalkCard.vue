@@ -38,7 +38,7 @@ export default defineComponent({
 .talk-card-root {
   position: relative;
   height: 100%;
-  padding: 15px;
+  padding: 5px;
   border-radius: 4px;
   transform: rotateY(180deg);
   transition: transform 0.5s;
@@ -49,7 +49,12 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     border-radius: 8px;
-    background-color: #fff;
+    padding: 10px;
+    // background-color: #fff;
+    background-image: url(../assets/textbg.svg);
+    background-repeat: no-repeat;
+    background-size: 95%;
+    background-position: center;
     text-align: center;
     visibility: hidden;
     transition: visibility 0s ease 0.25s;

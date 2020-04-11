@@ -2,7 +2,7 @@
   <div class="count-down-root">
     <div class="title">のこりじかん</div>
     <div class="time">
-      {{ time }}
+      <span class="sec">{{ time }}</span>
       <span class="suffix">びょう</span>
     </div>
   </div>
@@ -46,14 +46,20 @@ export default defineComponent({
 <style lang="scss" scoped>
 .count-down-root {
   display: inline-block;
-  color: #777;
-  mix-blend-mode: multiply;
+  color: #fff;
   text-align: right;
   .title {
     font-size: 11pt;
   }
   .time {
-    font-size: 20pt;
+    position: relative;
+    top: -5px;
+    .sec {
+      display: inline-block;
+      font-size: 20pt;
+      font-weight: bold;
+      padding-right: 5px;
+    }
     .suffix {
       font-size: 9pt;
     }

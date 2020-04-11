@@ -1,3 +1,5 @@
 export const THEME_COLLOR = '#eb73a3'
 export const STYLE_COLOR = '#61c8d4'
-export const TITLE_COLOR = '#f7d139'
+export const THEME_SHADOW = '#82144977'
+export const STYLE_SHADOW = '#24688a77'
+export const TITLE_COLOR = '#444'

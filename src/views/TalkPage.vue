@@ -27,7 +27,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '../assets/global.scss';
-$header-height: 100px;
+$header-height: 75px;
 $footer-height: 60px;
 .header {
   height: $header-height;
