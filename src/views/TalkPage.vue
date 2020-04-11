@@ -37,7 +37,7 @@ footer {
   background-color: $title-color;
 }
 main {
-  height: calc(100vh - #{$header-height + $footer-height});
+  height: calc(100% - #{$header-height + $footer-height});
   background-color: #fff;
 }
 </style>

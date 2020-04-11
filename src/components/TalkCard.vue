@@ -74,8 +74,8 @@ export default defineComponent({
     transition: visibility 0s ease 0.25s;
     .text {
       white-space: pre-wrap;
-      color: #666;
-      mix-blend-mode: luminosity;
+      color: #000;
+      mix-blend-mode: soft-light;
       font-size: 2rem;
       font-weight: bold;
       transform: rotateY(180deg);
