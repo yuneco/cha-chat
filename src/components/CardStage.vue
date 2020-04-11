@@ -95,6 +95,8 @@ export default defineComponent({
         cardState.themeCard.isOpen = false
         cardState.themeCard.isFlipping = true
       }
+      await wait(250)
+      cardState.themeCard.isFlipping = false
       if (isStyle) {
         cardState.styleCard.isOpen = false
         cardState.styleCard.isFlipping = true
@@ -104,9 +106,7 @@ export default defineComponent({
         timerState.isActive = false
       }
       await wait(250)
-      cardState.themeCard.isFlipping = false
       cardState.styleCard.isFlipping = false
-      await wait(250)
     }
 
     const setNewCard = async () => {

@@ -17,7 +17,7 @@ html, body {
   height: 100%;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: ArialRoundedMTBold, Avenir, Helvetica, Arial, "Hiragino Maru Gothic Pro", HGMaruGothicMPRO, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

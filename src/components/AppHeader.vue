@@ -28,6 +28,8 @@ header {
   .subtitle {
     color: #fff;
     font-size: 11pt;
+    padding-top: 6px;
+    letter-spacing: 0.25em;
   }
   .title {
     position: absolute;
@@ -36,7 +38,7 @@ header {
     font-weight: bold;
     width: 100%;
     left: 0;
-    bottom: -22px;
+    bottom: -16px;
   }
 }
 </style>
