@@ -24,6 +24,7 @@
     </div>
     <div class="control">
       <button class="change-button" @click="closeCard" title="change cards" v-show="isCardOpen"></button>
+      <CountDown class="timer" v-show="isAllCardOpen" :time="timerState.time" @sec="timerState.time -= 1"></CountDown>
     </div>
   </div>
 </template>
@@ -34,10 +35,12 @@ import TalkCard from '@/components/TalkCard.vue'
 import { THEME_COLLOR, STYLE_COLOR } from '@/Colors'
 import cards from '../assets/cards.json'
 import { randomFrom, wait } from '@/lib/utils'
+import CountDown from '@/components/CountDown.vue'
 
 export default defineComponent({
   components: {
-    TalkCard
+    TalkCard,
+    CountDown
   },
   props: {},
   setup () {
@@ -53,8 +56,12 @@ export default defineComponent({
         isOpen: false
       }
     })
+    const timerState = reactive({
+      time: 0
+    })
 
     const isCardOpen = computed(() => cardState.themeCard.isOpen || cardState.styleCard.isOpen)
+    const isAllCardOpen = computed(() => cardState.themeCard.isOpen && cardState.styleCard.isOpen)
 
     const openCard = async (isTheme = true, isStyle = true) => {
       if (isTheme) {
@@ -67,6 +74,9 @@ export default defineComponent({
         cardState.styleCard.isOpen = true
         await wait(300)
       }
+      if (isAllCardOpen.value) {
+        timerState.time = 20
+      }
     }
 
     const closeCard = async (isTheme = true, isStyle = true) => {
@@ -75,6 +85,9 @@ export default defineComponent({
       }
       if (isStyle) {
         cardState.styleCard.isOpen = false
+      }
+      if (!isAllCardOpen.value) {
+        timerState.time = 0
       }
       await wait(500)
     }
@@ -100,11 +113,13 @@ export default defineComponent({
     return {
       cardState,
       isCardOpen,
+      isAllCardOpen,
       setNewCard,
       openCard,
       closeCard,
       clickThemeCard,
-      clickStyleCard
+      clickStyleCard,
+      timerState
     }
   }
 })
@@ -155,6 +170,11 @@ export default defineComponent({
     background-size: 80%;
     background-position: center;
     background-repeat: no-repeat;
+  }
+  .timer {
+    position: absolute;
+    top: 20px;
+    right: 10px;
   }
 }
 </style>
