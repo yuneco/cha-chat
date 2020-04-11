@@ -23,8 +23,10 @@
       />
     </div>
     <div class="control">
-      <button class="change-button" @click="closeCard" title="change cards" v-show="isCardOpen"></button>
-      <CountDown class="timer" v-show="isAllCardOpen" :time="timerState.time" @sec="timerState.time -= 1"></CountDown>
+      <button class="change-button" @click="closeCard" title="change cards" v-show="timerState.isActive"></button>
+      <button class="cancel-button" @click="closeCard" title="change cards" v-show="isCardOpen && !timerState.isActive"></button>
+      <button class="ok-button" @click="startCount" title="start talk" v-show="isAllCardOpen && !timerState.isActive"></button>
+      <CountDown class="timer" v-show="timerState.isActive" :time="timerState.time" @sec="timerState.time -= 1"></CountDown>
     </div>
   </div>
 </template>
@@ -57,11 +59,13 @@ export default defineComponent({
       }
     })
     const timerState = reactive({
-      time: 0
+      time: 0,
+      isActive: false
     })
 
     const isCardOpen = computed(() => cardState.themeCard.isOpen || cardState.styleCard.isOpen)
     const isAllCardOpen = computed(() => cardState.themeCard.isOpen && cardState.styleCard.isOpen)
+    const isTimeup = computed(() => timerState.isActive && timerState.time === 0)
 
     const openCard = async (isTheme = true, isStyle = true) => {
       if (isTheme) {
@@ -74,9 +78,6 @@ export default defineComponent({
         cardState.styleCard.isOpen = true
         await wait(300)
       }
-      if (isAllCardOpen.value) {
-        timerState.time = 20
-      }
     }
 
     const closeCard = async (isTheme = true, isStyle = true) => {
@@ -88,6 +89,7 @@ export default defineComponent({
       }
       if (!isAllCardOpen.value) {
         timerState.time = 0
+        timerState.isActive = false
       }
       await wait(500)
     }
@@ -110,16 +112,23 @@ export default defineComponent({
       openCard(false, true)
     }
 
+    const startCount = () => {
+      timerState.time = 20
+      timerState.isActive = true
+    }
+
     return {
       cardState,
       isCardOpen,
       isAllCardOpen,
+      isTimeup,
       setNewCard,
       openCard,
       closeCard,
       clickThemeCard,
       clickStyleCard,
-      timerState
+      timerState,
+      startCount
     }
   }
 })
@@ -159,17 +168,34 @@ export default defineComponent({
   left: 0;
   top: calc(100% - 20px);
   text-align: center;
-  .change-button {
+  button {
     display: inline-block;
     width: 60px;
     height: 60px;
     border: 4px solid $title-color;
     border-radius: 30px;
     background-color: #fff;
-    background-image: url(../assets/change.svg);
-    background-size: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
+    &+button {
+      margin-left: 5px;
+    }
+    &.change-button {
+      background-image: url(../assets/change.svg);
+      background-size: 80%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    &.cancel-button {
+      background-image: url(../assets/cancel.svg);
+      background-size: 60%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    &.ok-button {
+      background-image: url(../assets/ok.svg);
+      background-size: 67%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
   }
   .timer {
     position: absolute;
