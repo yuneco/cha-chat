@@ -57,6 +57,7 @@ export default defineComponent({
   backdrop-filter: blur(10px);
   padding: 5%;
   opacity: 1;
+  z-index: 1;
 }
 .dialog {
   position: relative;
