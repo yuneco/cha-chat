@@ -23,9 +23,9 @@
       />
     </div>
     <div class="control">
-      <button class="change-button" @click="closeCard" title="change cards" v-show="timerState.isActive"></button>
-      <button class="cancel-button" @click="closeCard" title="change cards" v-show="isCardOpen && !timerState.isActive"></button>
+      <button class="cancel-button" @click="closeCard" title="change cards" v-show="isCardOpen"></button>
       <button class="ok-button" @click="startCount" title="start talk" v-show="isAllCardOpen && !timerState.isActive"></button>
+      <button class="change-button" @click="startCount" title="change cards" v-show="timerState.isActive"></button>
       <CountDown class="timer" v-show="timerState.isActive" :time="timerState.time" @sec="timerState.time -= 1"></CountDown>
     </div>
   </div>
@@ -196,6 +196,9 @@ export default defineComponent({
     border: 4px solid $title-color;
     border-radius: 30px;
     background-color: #fff;
+    &:active {
+      transform: translateY(4px);
+    }
     &+button {
       margin-left: 8px;
     }
