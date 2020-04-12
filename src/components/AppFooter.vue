@@ -26,6 +26,8 @@ button {
   display: inline-block;
   width: 40px;
   height: 40px;
+  text-align: center;
+  padding: 1px;
   border: 4px solid $title-color;
   border-radius: 30px;
   background-color: #fff;
