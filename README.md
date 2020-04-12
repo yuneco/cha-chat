@@ -6,7 +6,7 @@ TODO: ここに説明を追加
 
 ## ここであそべます！
 
-https://yuneco.github.io/talk-card/#/talk
+https://yuneco.github.io/cha-chat/#/talk
 
 ## 開発者向け：ローカルで動かす・カスタマイズする
 
