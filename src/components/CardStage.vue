@@ -200,7 +200,11 @@ export default defineComponent({
   top: calc(100% - 15px);
   z-index: 1;
   text-align: center;
+  pointer-events: none;
   filter: drop-shadow(0 0 1px #ffffff00);
+  * {
+    pointer-events: auto;
+  }
   button {
     display: inline-block;
     width: 60px;
