@@ -15,9 +15,10 @@ CHA-CHAT! は、COVID-19によって世界中の人たちがこれまで当た�
 CHA-CHAT! 開発チーム：
 
 * よこたさん
-* まっちゃん (yuneco)
-* TETSUYA SASAKI
+* Yuki (@yuneco)
+* TETSUYA SASAKI (@tetsasaki)
 
+Contact: https://pf.nekobooks.com/contact
 
 ## ここであそべます！
 
