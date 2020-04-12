@@ -26,7 +26,13 @@
       <button class="cancel-button" @click="closeCard" title="change cards" v-show="isCardOpen"></button>
       <button class="ok-button" @click="startCount" title="start talk" v-show="isAllCardOpen && !timerState.isActive"></button>
       <!-- <button class="change-button" @click="startCount" title="change cards" v-show="timerState.isActive"></button> -->
-      <CountDown class="timer" v-show="timerState.isActive" :time="timerState.time" @sec="timerState.time -= 1" @retry="startCount"></CountDown>
+      <CountDown
+        class="timer"
+        :class="{popping: timerState.isPopping}"
+        v-show="timerState.isActive"
+        :time="timerState.time"
+        @sec="timerState.time -= 1"
+        @retry="startCount" />
     </div>
   </div>
 </template>
@@ -64,7 +70,8 @@ export default defineComponent({
     })
     const timerState = reactive({
       time: 0,
-      isActive: false
+      isActive: false,
+      isPopping: false
     })
 
     const isCardOpen = computed(() => cardState.themeCard.isOpen || cardState.styleCard.isOpen)
@@ -128,9 +135,12 @@ export default defineComponent({
     }
 
     const startCount = async () => {
-      await wait(250)
       timerState.time = 20
       timerState.isActive = true
+      await wait(0)
+      timerState.isPopping = true
+      await wait(250)
+      timerState.isPopping = false
     }
 
     return {
@@ -227,6 +237,10 @@ export default defineComponent({
     position: absolute;
     top: 25px;
     right: 10px;
+    transition: transform 0.2s ease-in;
+    &.popping {
+      transform: translateY(-10px);
+    }
   }
 }
 </style>
