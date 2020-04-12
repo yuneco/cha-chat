@@ -1,10 +1,14 @@
-# talk-card
+# CHA-CHAT!
 
-## 試したいとき
+## CHA-CHATとは？
+
+TODO: ここに説明を追加
+
+## ここであそべます！
 
 https://yuneco.github.io/talk-card/#/talk
 
-## ローカルで動かす・カスタマイズする
+## 開発者向け：ローカルで動かす・カスタマイズする
 
 ### 必要なもの
 
