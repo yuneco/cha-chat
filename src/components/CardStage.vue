@@ -76,7 +76,7 @@ export default defineComponent({
         cardState.themeCard.text = randomFrom(cards.themes)
         cardState.themeCard.isOpen = true
         cardState.themeCard.isFlipping = true
-        await wait(250)
+        await wait(300)
         cardState.themeCard.isFlipping = false
         await wait(250)
       }
@@ -84,29 +84,29 @@ export default defineComponent({
         cardState.styleCard.text = randomFrom(cards.styles)
         cardState.styleCard.isOpen = true
         cardState.styleCard.isFlipping = true
-        await wait(250)
+        await wait(300)
         cardState.styleCard.isFlipping = false
         await wait(250)
       }
     }
 
     const closeCard = async (isTheme = true, isStyle = true) => {
-      if (isTheme) {
+      if (isTheme && cardState.themeCard.isOpen) {
         cardState.themeCard.isOpen = false
         cardState.themeCard.isFlipping = true
+        await wait(300)
+        cardState.themeCard.isFlipping = false
       }
-      await wait(250)
-      cardState.themeCard.isFlipping = false
-      if (isStyle) {
+      if (isStyle && cardState.styleCard.isOpen) {
         cardState.styleCard.isOpen = false
         cardState.styleCard.isFlipping = true
+        await wait(300)
+        cardState.styleCard.isFlipping = false
       }
       if (!isAllCardOpen.value) {
         timerState.time = 0
         timerState.isActive = false
       }
-      await wait(250)
-      cardState.styleCard.isFlipping = false
     }
 
     const setNewCard = async () => {
@@ -127,7 +127,8 @@ export default defineComponent({
       openCard(false, true)
     }
 
-    const startCount = () => {
+    const startCount = async () => {
+      await wait(250)
       timerState.time = 20
       timerState.isActive = true
     }
@@ -169,13 +170,14 @@ export default defineComponent({
     height: 20px;
     font-size: 14px;
     padding: 1px 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     color: #fff;
     left: -10px;
-    top: 10px;
+    top: 5px;
     z-index: 1;
-    transition: transform 0.2s ease-out;
+    transition: transform 0.2s ease-in;
     &.flipping {
+      transition-timing-function: ease-out;
       transform: translateY(-20px);
     }
   }
