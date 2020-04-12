@@ -1,10 +1,17 @@
 <template>
   <div class="count-down-root">
-    <div class="title">のこりじかん</div>
-    <div class="time">
-      <span class="sec">{{ time }}</span>
-      <span class="suffix">びょう</span>
-    </div>
+    <template v-if="time > 0">
+      <div class="title">のこりじかん</div>
+      <div class="time">
+        <span class="sec">{{ time }}</span>
+        <span class="suffix">びょう</span>
+      </div>
+    </template>
+    <template v-if="time <= 0">
+      <div class="retry" @click="$emit('retry')">
+        もういちど！
+      </div>
+    </template>
   </div>
 </template>
 
@@ -63,6 +70,11 @@ export default defineComponent({
     .suffix {
       font-size: 9pt;
     }
+  }
+  .retry {
+    position: relative;
+    top: 6px;
+    font-size: 14pt;
   }
 }
 </style>

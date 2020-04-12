@@ -25,8 +25,8 @@
     <div class="control">
       <button class="cancel-button" @click="closeCard" title="change cards" v-show="isCardOpen"></button>
       <button class="ok-button" @click="startCount" title="start talk" v-show="isAllCardOpen && !timerState.isActive"></button>
-      <button class="change-button" @click="startCount" title="change cards" v-show="timerState.isActive"></button>
-      <CountDown class="timer" v-show="timerState.isActive" :time="timerState.time" @sec="timerState.time -= 1"></CountDown>
+      <!-- <button class="change-button" @click="startCount" title="change cards" v-show="timerState.isActive"></button> -->
+      <CountDown class="timer" v-show="timerState.isActive" :time="timerState.time" @sec="timerState.time -= 1" @retry="startCount"></CountDown>
     </div>
   </div>
 </template>
