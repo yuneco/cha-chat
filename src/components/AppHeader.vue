@@ -5,6 +5,7 @@
     </div>
     <div class="title">
       CHA-CHAT!
+      <div class="ruby">チャチャット!</div>
     </div>
   </header>
 </template>
@@ -39,6 +40,27 @@ header {
     width: 100%;
     left: 0;
     bottom: -16px;
+    .ruby {
+      position: absolute;
+      right: 20px;
+      bottom: 0px;
+      text-align: right;
+      font-weight: bold;
+      -webkit-text-stroke: 6px #fff;
+      color: $title-color;
+      font-size: 14pt;
+      transform: rotate(4deg);
+      &::after{
+        content: 'チャチャット!';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        text-align: right;
+        font-weight: bold;
+        -webkit-text-stroke: 1px $title-color;
+      }
+    }
   }
 }
 </style>

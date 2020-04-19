@@ -23,10 +23,16 @@
       />
     </div>
     <div class="control">
-      <button class="change-button" @click="closeCard" title="change cards" v-show="timerState.isActive"></button>
-      <button class="cancel-button" @click="closeCard" title="change cards" v-show="isCardOpen && !timerState.isActive"></button>
+      <button class="cancel-button" @click="closeCard" title="change cards" v-show="isCardOpen"></button>
       <button class="ok-button" @click="startCount" title="start talk" v-show="isAllCardOpen && !timerState.isActive"></button>
-      <CountDown class="timer" v-show="timerState.isActive" :time="timerState.time" @sec="timerState.time -= 1"></CountDown>
+      <!-- <button class="change-button" @click="startCount" title="change cards" v-show="timerState.isActive"></button> -->
+      <CountDown
+        class="timer"
+        :class="{popping: timerState.isPopping}"
+        v-show="timerState.isActive"
+        :time="timerState.time"
+        @sec="timerState.time -= 1"
+        @retry="startCount" />
     </div>
   </div>
 </template>
@@ -64,7 +70,8 @@ export default defineComponent({
     })
     const timerState = reactive({
       time: 0,
-      isActive: false
+      isActive: false,
+      isPopping: false
     })
 
     const isCardOpen = computed(() => cardState.themeCard.isOpen || cardState.styleCard.isOpen)
@@ -76,7 +83,7 @@ export default defineComponent({
         cardState.themeCard.text = randomFrom(cards.themes)
         cardState.themeCard.isOpen = true
         cardState.themeCard.isFlipping = true
-        await wait(250)
+        await wait(300)
         cardState.themeCard.isFlipping = false
         await wait(250)
       }
@@ -84,29 +91,29 @@ export default defineComponent({
         cardState.styleCard.text = randomFrom(cards.styles)
         cardState.styleCard.isOpen = true
         cardState.styleCard.isFlipping = true
-        await wait(250)
+        await wait(300)
         cardState.styleCard.isFlipping = false
         await wait(250)
       }
     }
 
     const closeCard = async (isTheme = true, isStyle = true) => {
-      if (isTheme) {
+      if (isTheme && cardState.themeCard.isOpen) {
         cardState.themeCard.isOpen = false
         cardState.themeCard.isFlipping = true
+        await wait(300)
+        cardState.themeCard.isFlipping = false
       }
-      await wait(250)
-      cardState.themeCard.isFlipping = false
-      if (isStyle) {
+      if (isStyle && cardState.styleCard.isOpen) {
         cardState.styleCard.isOpen = false
         cardState.styleCard.isFlipping = true
+        await wait(300)
+        cardState.styleCard.isFlipping = false
       }
       if (!isAllCardOpen.value) {
         timerState.time = 0
         timerState.isActive = false
       }
-      await wait(250)
-      cardState.styleCard.isFlipping = false
     }
 
     const setNewCard = async () => {
@@ -127,9 +134,13 @@ export default defineComponent({
       openCard(false, true)
     }
 
-    const startCount = () => {
+    const startCount = async () => {
       timerState.time = 20
       timerState.isActive = true
+      await wait(0)
+      timerState.isPopping = true
+      await wait(250)
+      timerState.isPopping = false
     }
 
     return {
@@ -169,13 +180,14 @@ export default defineComponent({
     height: 20px;
     font-size: 14px;
     padding: 1px 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     color: #fff;
     left: -10px;
-    top: 10px;
+    top: 5px;
     z-index: 1;
-    transition: transform 0.2s ease-out;
+    transition: transform 0.2s ease-in;
     &.flipping {
+      transition-timing-function: ease-out;
       transform: translateY(-20px);
     }
   }
@@ -188,7 +200,11 @@ export default defineComponent({
   top: calc(100% - 15px);
   z-index: 1;
   text-align: center;
+  pointer-events: none;
   filter: drop-shadow(0 0 1px #ffffff00);
+  * {
+    pointer-events: auto;
+  }
   button {
     display: inline-block;
     width: 60px;
@@ -196,6 +212,9 @@ export default defineComponent({
     border: 4px solid $title-color;
     border-radius: 30px;
     background-color: #fff;
+    &:active {
+      transform: translateY(4px);
+    }
     &+button {
       margin-left: 8px;
     }
@@ -222,6 +241,10 @@ export default defineComponent({
     position: absolute;
     top: 25px;
     right: 10px;
+    transition: transform 0.2s ease-in;
+    &.popping {
+      transform: translateY(-10px);
+    }
   }
 }
 </style>
