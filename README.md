@@ -15,7 +15,7 @@ Macの場合gitはインストール済みかもしれません。
 
 ```sh
 cd 好きなディレクトリ
-git clone https://github.com/yuneco/talk-card.git
+git clone https://github.com/yuneco/cha-chat
 ```
 
 ### 実行する
@@ -23,7 +23,7 @@ git clone https://github.com/yuneco/talk-card.git
 プロジェクトのフォルダに移動
 
 ```sh
-cd さっきのディレクトリ/talk-card
+cd さっきのディレクトリ/cha-chat
 ```
 
 初回だけ、以下を実行
@@ -35,7 +35,7 @@ npm install
 その後、
 
 ```sh
-cd さっきのディレクトリ/talk-card
+cd さっきのディレクトリ/cha-chat
 npm run serve
 ```
 
