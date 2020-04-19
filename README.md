@@ -29,8 +29,16 @@ Contact: https://pf.nekobooks.com/contact
 
 ### 必要なもの
 
-[Node.js](https://nodejs.org/ja/)と[git](https://git-scm.com/downloads)をインストールしてください。
+- [Node.js](https://nodejs.org/ja/)と[git](https://git-scm.com/downloads)をインストールしてください。  
 Macの場合gitはインストール済みかもしれません。
+
+- yarnをインストール
+
+```sh
+npm install -g yarn
+```
+
+※ 上記は簡易的なインストール方法です。詳細は[yarnの公式ページ](https://classic.yarnpkg.com/ja/docs/install/)を参照してください。
 
 ### リポジトリをクローンする
 
@@ -50,13 +58,13 @@ cd さっきのディレクトリ/cha-chat
 初回だけ、以下を実行
 
 ```sh
-npm install
+yarn install
 ```
 
 その後、
 
 ```sh
-npm run serve
+yarn run serve
 ```
 
 ↓こんな感じで表示されます
